@@ -9,11 +9,11 @@ const ButtonCustom = ({
   title = 'Button',
   onPress,
   color = colors.primary,
-  style,
+  buttonStyle,
 }) => {
   return (
     <TouchableOpacity
-      style={[style, styles.button, {backgroundColor: color}]}
+      style={[buttonStyle, styles.button, {backgroundColor: color}]}
       onPress={onPress}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
