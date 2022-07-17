@@ -1,12 +1,21 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
 import {colors, dimens} from '../../utils';
 import {fonts} from '../../assets';
 import {GlobalContext} from '../../Store/globalContext';
+import {getMoviesFromApi} from '../../services/TestConsume';
 
 const Home = ({navigation, route}) => {
   const globalContext = useContext(GlobalContext);
   const dark = globalContext.state.isDark;
+
+  const getData = async () => {
+    const result = await getMoviesFromApi();
+    console.log('result...', result);
+  };
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <View

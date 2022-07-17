@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import {StyleSheet} from 'react-native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {Home, Setting} from '../screens';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,10 +15,20 @@ function MainNavigator() {
     <Tab.Navigator
       initialRouteName="Home"
       activeColor={colors.primary}
-      barStyle={{
+      inactiveColor="#95a5a6"
+      shifting={false}
+      barStyle={[
+        styles.barStyle,
+        {
+          backgroundColor: dark ? colors.black : colors.white,
+          borderTopWidth: dark ? 0.3 : 0,
+          borderRightWidth: dark ? 0.3 : 0,
+          borderLeftWidth: dark ? 0.3 : 0,
+          borderColor: colors.gray,
+        },
+      ]}
+      style={{
         backgroundColor: dark ? colors.black : colors.white,
-        borderTopWidth: dark ? 0.3 : 0,
-        borderColor: colors.gray,
       }}>
       <Tab.Screen
         name="Home"
@@ -43,4 +53,18 @@ function MainNavigator() {
     </Tab.Navigator>
   );
 }
+const styles = StyleSheet.create({
+  barStyle: {
+    backgroundColor: colors.white,
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+    paddingHorizontal: 8,
+
+    justifyContent: 'center',
+    height: 75,
+    borderColor: colors.lightGray,
+    // position: 'absolute', //use if you want to absolute navbar
+    width: '100%',
+  },
+});
 export default MainNavigator;
