@@ -36,6 +36,7 @@ const Setting = ({navigation, route}) => {
           color={colors.green}
           style={{marginTop: dimens.m}}
           onPress={_setLightTheme}
+          buttonStyle={{marginTop: dimens.l}}
         />
       </View>
     </SafeAreaView>
