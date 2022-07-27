@@ -9,6 +9,7 @@ const get = async (url = '', params = {}) => {
   for (let key in params) {
     queryString.append(key, params[key]);
   }
+
   let newUrl =
     queryString.toString() != ''
       ? `${AppConfig.baseUrl}${url}?${queryString.toString()}`
@@ -17,7 +18,7 @@ const get = async (url = '', params = {}) => {
   console.log('ENDPOINT...', newUrl);
 
   let token = await AsyncStorage.getItem('token');
-
+  console.log('token', token);
   let result =
     token != null
       ? fetch(newUrl, {
@@ -53,19 +54,11 @@ const get = async (url = '', params = {}) => {
 };
 
 const post = async (url = '', params = {}) => {
-  let queryString = new URLSearchParams();
-  for (let key in params) {
-    queryString.append(key, params[key]);
-  }
-  let newUrl =
-    queryString.toString() != ''
-      ? `${AppConfig.baseUrl}${url}?${queryString.toString()}`
-      : `${AppConfig.baseUrl}${url}`;
-
+  let newUrl = `${AppConfig.baseUrl}${url}`;
   console.log('ENDPOINT...', newUrl);
 
   let token = await AsyncStorage.getItem('token');
-
+  console.log('token', token);
   let result =
     token != null
       ? fetch(newUrl, {
@@ -101,4 +94,131 @@ const post = async (url = '', params = {}) => {
           });
   return result;
 };
-export {get, post};
+const put = async (url = '', params = {}) => {
+  let newUrl = `${AppConfig.baseUrl}${url}`;
+  console.log('ENDPOINT...', newUrl);
+
+  let token = await AsyncStorage.getItem('token');
+  console.log('token', token);
+  let result =
+    token != null
+      ? fetch(newUrl, {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(params),
+        })
+          .then(res => res.json())
+          .then(resJson => {
+            return resJson;
+          })
+          .catch(err => {
+            return err;
+          })
+      : fetch(newUrl, {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(params),
+        })
+          .then(res => res.json())
+          .then(resJson => {
+            return resJson;
+          })
+          .catch(err => {
+            return err;
+          });
+  return result;
+};
+
+const postFormData = async (url = '', params = new FormData()) => {
+  let newUrl = `${AppConfig.baseUrl}${url}`;
+  console.log('ENDPOINT...', newUrl);
+
+  let token = await AsyncStorage.getItem('token');
+  console.log('token', token);
+
+  let result =
+    token != null
+      ? fetch(newUrl, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+          body: params,
+        })
+          .then(res => res.json())
+          .then(resJson => {
+            return resJson;
+          })
+          .catch(err => {
+            return err;
+          })
+      : fetch(newUrl, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          body: params,
+        })
+          .then(res => res.json())
+          .then(resJson => {
+            return resJson;
+          })
+          .catch(err => {
+            return err;
+          });
+  return result;
+};
+
+const putFormData = async (url = '', params = new FormData()) => {
+  let newUrl = `${AppConfig.baseUrl}${url}`;
+  console.log('ENDPOINT...', newUrl);
+
+  let token = await AsyncStorage.getItem('token');
+  console.log('token', token);
+
+  let result =
+    token != null
+      ? fetch(newUrl, {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+          body: params,
+        })
+          .then(res => res.json())
+          .then(resJson => {
+            return resJson;
+          })
+          .catch(err => {
+            return err;
+          })
+      : fetch(newUrl, {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          body: params,
+        })
+          .then(res => res.json())
+          .then(resJson => {
+            return resJson;
+          })
+          .catch(err => {
+            return err;
+          });
+  return result;
+};
+export {get, post, postFormData, put, putFormData};
